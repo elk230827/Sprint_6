@@ -1,13 +1,13 @@
-from time import sleep
+import allure
 import config
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
 from tests.test_base import BaseTest
-from tests.test_data import LAST, COMMENT, NAME, ADDRESS, COLOR, METRO, PHONE, TERM_OPTION
+from test_data import LAST, COMMENT, NAME, ADDRESS, COLOR, METRO, PHONE, TERM_OPTION
 
 
 class TestOrder(BaseTest):
-
+    @allure.title("Заказ через кнопку на странице")
     def test_order_home_middle(self):
         self.driver.get(config.URL)
         
@@ -21,6 +21,7 @@ class TestOrder(BaseTest):
 
         assert order_page.check_header()
 
+    @allure.title("Заказ через кнопку в заговке")
     def test_order_header(self):
         self.driver.get(config.URL)
         
@@ -34,6 +35,7 @@ class TestOrder(BaseTest):
 
         assert order_page.check_header()
 
+    @allure.title("Проверка процесса заказа")
     def test_order_flow(self):
         self.driver.get(config.URL)
         

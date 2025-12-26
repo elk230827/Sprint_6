@@ -1,12 +1,9 @@
 from selenium.webdriver.common.by import By
 
-from pages.base_page import BasePage
+from pages.samokat_page import BasePage, SamokatPage
 import allure
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
 
-class OrderPage(BasePage):
+class OrderPage(SamokatPage):
     header = (By.XPATH, '//div[contains(text(), "Для кого самокат")]' )
     name = (By.XPATH, '//input[contains(@placeholder, "Имя")]' )
     last = (By.XPATH, '//input[contains(@placeholder, "Фамилия")]' )
@@ -35,68 +32,68 @@ class OrderPage(BasePage):
 
     @allure.step("Проверить заголовок")
     def check_header(self):
-        el = self.driver.find_element(*self.header)
+        el = self.find(*self.header)
         return el.is_displayed()
     
     @allure.step("Заполнить форму Для кого самокат")
     def fill_form(self, name, last, address, metro, phone):
-        el = self.driver.find_element(*self.name)
+        el = self.find(*self.name)
         el.send_keys(name)
     
-        el = self.driver.find_element(*self.last)
+        el = self.find(*self.last)
         el.send_keys(last)
 
-        el = self.driver.find_element(*self.address)
+        el = self.find(*self.address)
         el.send_keys(address)
 
-        el = self.driver.find_element(*self.metro)
+        el = self.find(*self.metro)
         el.click()
-        el = self.driver.find_element(By.XPATH, f'//div[contains(text(), "{metro}")]')
+        el = self.find(By.XPATH, f'//div[contains(text(), "{metro}")]')
         el.click()
 
 
-        el = self.driver.find_element(*self.phone)
+        el = self.find(*self.phone)
         el.send_keys(phone)
 
-        el = self.driver.find_element(*self.next_button)
+        el = self.find(*self.next_button)
         el.click()
 
     @allure.step("Заполнить форму Аренда")
     def fill_rent_form(self, term_option, color, comment):
-        el = self.driver.find_element(*self.date)
+        el = self.find(*self.date)
         el.click()
     
-        el = self.driver.find_elements(*self.date_picker)
+        el = self.find_all(*self.date_picker)
         el[-1].click()
 
-        el = self.driver.find_element(*self.term)
+        el = self.find(*self.term)
         el.click()
 
-        el = self.driver.find_elements(*self.term_options)
+        el = self.find_all(*self.term_options)
         el[term_option].click()
 
         if color == "grey":
-            el = self.driver.find_element(*self.color_gray)
+            el = self.find(*self.color_gray)
             el.click()
 
         if color == "black":
-            el = self.driver.find_element(*self.color_black)
+            el = self.find(*self.color_black)
             el.click()
 
-        el = self.driver.find_element(*self.comment )
+        el = self.find(*self.comment )
         el.send_keys(comment)
 
-        el = self.driver.find_elements(*self.order_button)
+        el = self.find_all(*self.order_button)
         el[1].click()
     
 
     @allure.step("Проверить заказ")
     def check_order(self):
 
-        el = self.driver.find_element(*self.form_header)
+        el = self.find(*self.form_header)
         return el.is_displayed()
 
     @allure.step("Закрыть заказ")
     def close_order(self):
-        el = self.driver.find_element(*self.order_no_button)
+        el = self.find(*self.order_no_button)
         el.click()
