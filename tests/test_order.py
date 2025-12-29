@@ -2,50 +2,36 @@ import allure
 import config
 from pages.home_page import HomePage
 from pages.order_page import OrderPage
+from pages.samokat_page import SamokatPage
 from tests.test_base import BaseTest
 from test_data import LAST, COMMENT, NAME, ADDRESS, COLOR, METRO, PHONE, TERM_OPTION
 
 
 class TestOrder(BaseTest):
     @allure.title("Заказ через кнопку на странице")
-    def test_order_home_middle(self):
-        self.driver.get(config.URL)
-        
-        home_page = HomePage(self.driver)
-
-        home_page.close_cookie()
+    def test_order_home_middle(self, home_page):
 
         home_page.order_middle_button()
 
-        order_page = OrderPage(self.driver)
+        order_page = OrderPage(home_page.driver)
 
         assert order_page.check_header()
 
     @allure.title("Заказ через кнопку в заговке")
     def test_order_header(self):
+        page = SamokatPage(self.driver)
         self.driver.get(config.URL)
-        
-        home_page = HomePage(self.driver)
+        page.order_header_button()
 
-        home_page.close_cookie()
-
-        home_page.order_header_button()
-
-        order_page = OrderPage(self.driver)
+        order_page = OrderPage(page.driver)
 
         assert order_page.check_header()
 
     @allure.title("Проверка процесса заказа")
-    def test_order_flow(self):
-        self.driver.get(config.URL)
-        
-        home_page = HomePage(self.driver)
+    def test_order_flow(self, home_page):
+        home_page.order_middle_button()
 
-        home_page.close_cookie()
-
-        home_page.order_header_button()
-
-        order_page = OrderPage(self.driver)
+        order_page = OrderPage(home_page.driver)
 
         assert order_page.check_header()
 
@@ -59,7 +45,7 @@ class TestOrder(BaseTest):
 
         order_page.click_logo()
 
-        home_page = HomePage(self.driver)
+        home_page = HomePage(home_page.driver)
 
         assert home_page.check_home_header()
 

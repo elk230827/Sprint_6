@@ -9,7 +9,7 @@ import logging
 from test_data import HOME_HEADER, QA
 
 
-class HomePage(SamokatPage):
+class HomePage(BasePage):
     question_header = (By.XPATH, '//div[contains(text(), "Вопросы о важном")]' )
 
     cookie = (By.XPATH, '//button[contains(text(), "да все привыкли")]' )

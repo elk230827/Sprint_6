@@ -14,12 +14,3 @@ class BaseTest:
     def teardown_class(cls):
         cls.driver.quit() 
 
-    @pytest.fixture
-    def home_page(self):
-        self.driver.get(config.URL)
-        
-        home_page = HomePage(self.driver)
-
-        home_page.close_cookie()
-
-        return home_page

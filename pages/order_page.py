@@ -32,6 +32,7 @@ class OrderPage(SamokatPage):
 
     @allure.step("Проверить заголовок")
     def check_header(self):
+        self.wait(self.header)
         el = self.find(*self.header)
         return el.is_displayed()
     
